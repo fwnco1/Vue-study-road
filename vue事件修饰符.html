@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="./vue.min.js"></script>
+    <style>
+        .inner {
+                height: 150px;
+                background-color: skyblue;
+            }
+            .outer {
+                padding: 40px;
+                background-color: yellowgreen;
+            }
+        </style>
+</head>
+
+<body>
+    <div id="app">
+        <!--使用.stop阻止冒泡-->
+        <!-- <div class="outer">
+            <div class="inner" @click="div1">
+                <input type="button" value="点击" @click.stop="btn">
+            </div>
+        </div> -->
+        <!--使用.prevent 阻止默认行为-->
+        <a href="http://www.baidu.com" @click.prevent="linkClick">取消默认行为事件</a>
+
+        <!--使用.capture实现捕获触发事件的机制-->
+        <!-- <div class="outer">
+                <div class="inner" @click.capture="div1">
+                    <input type="button" value="点击" @click="btn">
+                </div>
+        </div> -->
+        <!--使用.self实现只有点击当前元素,才会触发事件处理函数-->
+        <!-- <div class="outer">
+                <div class="inner" @click.self="div1">
+                    <input type="button" value="点击" @click="btn">
+                </div>
+        </div> -->
+        <!--使用.once 只触发一次事件处理函数-->
+        <!-- <a href="http://www.baidu.com" @click.prevent.once="linkClick">取消默认行为事件</a> -->
+
+        <!--.self 只会阻止自身的冒泡行为的触发,并不会真正的阻止冒泡行为-->
+        <div class="outer" @click="div2">
+                <div class="inner" @click.self="div1">
+                    <input type="button" value="点击" @click="btn">
+                </div>
+        </div>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+
+            },
+            methods: {
+                div1() {
+                    console.log('div1inner事件');
+
+                },
+                btn() {
+                    console.log("btn事件");
+
+                },
+                linkClick(){
+                    console.log("取消默认行为事件");
+                    
+                }
+                ,
+                div2(){
+                    console.log("outer事件触发");
+                    
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>
