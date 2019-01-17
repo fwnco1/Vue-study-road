@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./vue.min.js"></script>
+</head>
+<body>
+    <div id="app"> 
+        <div v-html="msg"></div>
+        <div v-text="msg"></div>
+        <div v-html="msg1"></div>
+        <div v-text="msg1"></div>
+        <div>{{msg}}</div>
+        <button @click='btn'>点击我像是隐藏</button>
+        <div v-show="flag">小跟班</div>
+    </div>
+</body>
+</html>
+<script>
+    let vm = new Vue({
+        el:'#app',
+        data:{
+            msg:'入门VUE',
+            msg1:'<h2>入门VUE1</h2>',
+            flag:true,
+
+        },
+        methods:{
+            btn:function(){
+                this.flag = !this.flag
+            }
+        }
+    })
+</script>

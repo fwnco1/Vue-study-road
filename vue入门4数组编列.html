@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./vue.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <ul>
+            <li v-for="(item,index) of list">
+                name: {{item}} -------- 索引: {{index}}
+            </li>
+        </ul>
+        <ul>
+            <li v-for="(item,key,index) of obj">
+                val:{{item}} --------key:{{key}} ---------索引: {{index}}
+            </li>
+        </ul>
+        <ul>
+            <li v-for="(item,index) of str">
+                name: {{item}} -------- 索引: {{index}}
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>
+<script>
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            list: ['小跟班', '小洲洲', '剑纯', '熊总', '组长'],
+            obj: {
+                id: 1,
+                name: '信爷',
+                des: '世界上最帅的男人',
+                price: '300000'
+            },
+            str: '我好帅，就是黑了点'
+        }
+    })
+
+
+
+</script>
