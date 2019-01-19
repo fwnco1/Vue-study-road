@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./vue.min.js"></script>
+    <style>
+        .red {
+            color: red
+        }
+        .bgc {
+            background-color:skyblue;
+        }
+        .fontSize{
+            font-size: 50px
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h2 :class="['red','bgc',flag?'fontSize':'']">我出道了</h2>
+        <button @click='addClass'>小朋友快来玩啊</button>
+    </div>
+</body>
+</html>
+<script>
+    let vm = new Vue({
+        el:'#app',
+        data:{
+            flag:false
+        },
+        methods:{
+            addClass(){
+                this.flag=!this.flag
+            }
+        }
+    })
+</script>

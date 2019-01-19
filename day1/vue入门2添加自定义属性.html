@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h2 v-bind:title="biaoti">我是一个动态绑定的一个属性</h2>
+        <h2 :title="biaoti">简写绑定一个自定属性</h2>
+        <h2 data-id="aaaa">以前的绑定自定义属性data-id</h2>
+        <h2 :data-id="aaaa">vue绑定自定义属性的方法</h2>
+        <button v-on:click="btn">点击我试试</button>
+        <button @click="btn">缩写绑定方法 点击试试</button>
+    </div>
+</body>
+</html>
+<script>
+    let vm = new Vue({
+        el:'#app',
+        data:{
+            msg:'v-bind',
+            biaoti:'我是一个标题',
+            aaaa:'其实我是一个自定义属性'
+        },
+        methods:{
+            btn(){
+                alert('试一下又不会死')
+            }
+        }
+    })
+</script>

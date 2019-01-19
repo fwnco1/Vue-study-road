@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="./vue.min.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <div>请输入内容</div>
+            <input type="text" v-model="msg">
+            <button @click="bd">点击我,把input的内容值放到数组里面去</button>
+            <ul>
+                <li v-for="(item,index) of list">
+                    {{item}}
+                </li>
+            </ul>
+        </div>
+        <script>
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    list:['小跟班','小洲洲','熊总','剑纯','组长'],
+                    msg:'我是双向数据绑定',
+                
+                },
+                methods:{
+                    bd(){
+                        this.list.push(this.msg)
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="./vue.min.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <button @click="move">动起来</button>
+            <button @click="stop">停下</button>
+            <h2>{{msg}}</h2>
+
+        </div>
+        <script>
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    msg:'猥琐发育,我来浪~~~~',
+                    timeId:'',
+                },
+                methods: {
+                    move(){
+                        clearInterval(this.timeId)
+                        this.timeId=  setInterval(()=>{
+                            let start = this.msg.substr(0,1)
+                            let end = this.msg.substr(1)
+                            this.msg = end+start
+                        },300)
+                    },
+                    stop(){
+                        clearInterval(this.timeId)
+                    }
+                },
+            })
+        </script>
+    </body>
+</html>

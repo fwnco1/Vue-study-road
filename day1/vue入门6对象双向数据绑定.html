@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="./vue.min.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            name:    <input type="text" v-model="msg1">
+            des:    <input type="text" v-model="msg2">
+            price:    <input type="text" v-model="msg3">
+            <button @click="add">点击我,把input的内容的值添加到数组中</button>
+            <ul>
+                <li v-for="(item,index) of list">
+                    {{item.id}}---->{{item.name}}---->{{item.des}}---->{{item.price}}
+                </li>
+            </ul>
+        </div>
+        <script>
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    msg1:1,
+                    msg2:2,
+                    msg3:3,
+                    num:1,
+                    list:[
+                        {
+                            id:1,
+                            name:'信爷',
+                            des:'世界最帅的男人',
+                            price:'3000000'
+                        }
+                    ]
+                },
+                methods:{
+                    add(){
+                       
+                        let id= ++this.num
+                        let name=this.msg1
+                        let des=this.msg2
+                        let price = this.msg3
+                        this.list.push({id,name,des,price})
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
