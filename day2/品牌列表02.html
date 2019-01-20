@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 
 <head>
     <title></title>
@@ -19,12 +19,12 @@
             <div class="panel-body form-inline">
                 <label>
                     Id:
-                    <input type="text" class="form-control" v-model="id">
+                    <input type="text" class="form-control" v-model="id" v-color="'red'">
                 </label>
 
                 <label>
                     Name:
-                    <input type="text" class="form-control" v-model="name">
+                    <input type="text" class="form-control" v-model="name" @keyup.enter="add" v-color="'blue'">
                 </label>
 
                 <!-- 在Vue中，使用事件绑定机制，为元素指定处理函数的时候，如果加了小括号，就可以给函数传参了 -->
@@ -32,7 +32,7 @@
 
                 <label>
                     搜索名称关键字：
-                    <input type="text" class="form-control" v-model="keywords">
+                    <input type="text" class="form-control" v-model="keywords" v-focus v-color="'yellowgreen'">
                 </label>
             </div>
         </div>
@@ -67,75 +67,85 @@
 
     </div>
 
+    <div id="app2" v-color v-fontweight="900" v-fontsize="50">
+
+       {{dateStr | dateNow}}
+
     </div>
+
+
+    <script src="./lib/moment.js"></script>
     <script>
-        Vue.filter('dateformat',(dateStr,pattern='')=>{
-            //根据给定的时间字符串转换,dateStr是一个形参,可以换成时间的时间字符串
+        Vue.filter('dateformat', (dateStr, pattern = '') => {
+            //根据给定的时间字符串转换,dateStr是一个形参,可以换成时间的字符串
             var dt = new Date(dateStr)
             let y = dt.getFullYear()
-            let m = dt.getMonth()+1 //得到的月份从0开始,所以要+1
+            let m = (dt.getMonth() + 1).toString().padStart(2, 0) //得到的月份从0开始,所以要+1
             let d = dt.getDate()
 
             // return `${y}-${m}-${d} `
-            if (pattern.toLowerCase()=='yy-mm-dd') {
+            if (pattern.toLowerCase() == 'yy-mm-dd') {
                 return `${y}-${m}-${d} `
             } else {
                 let hh = dt.getHours()
-                let mm = dt.getMinutes()
-                let ss = dt.getSeconds()
+                //string.padStart(n,str) padStart是字符串的专用填充方法,
+                //第一个参数n代表要多少个字符串,第二个参数就是用来填充的字符串
+                //.padEnd是从后面补充
+                let mm = (dt.getMinutes()).toString().padStart(2, 0)
+                let ss = (dt.getSeconds()).toString().padStart(2, 0)
                 return `${y}-${m}-${d} ${hh}:${mm}:${ss} `
             }
         })
-    
+
 
 
         var vm = new Vue({
             el: '#app',
             data: {
-                id:'',
-                name:'',
-                keywords:'',
-                list:[
-                    {id:1,name:"宝马",ctime:new Date()},
-                    {id:2,name:"奔驰",ctime:new Date()},
+                id: '',
+                name: '',
+                keywords: '',
+                list: [
+                    { id: 1, name: "宝马", ctime: new Date() },
+                    { id: 2, name: "奔驰", ctime: new Date() },
                 ]
 
             },
             methods: {
                 add() {
-                    let car = {id:parseInt(this.id),name:this.name,ctime:new Date()}
+                    let car = { id: parseInt(this.id), name: this.name, ctime: new Date() }
                     this.list.push(car)
                     this.id = ''
                     this.name = ''
                 }
                 ,
-                search(keywords){//根据关键字,进行数据的搜索
+                search(keywords) {//根据关键字,进行数据的搜索
                     // var newlist = []
                     // this.list.forEach(item => {
                     //     if (item.name.indexOf(keywords)!= -1) {
                     //         newlist.push(item)
                     //     }
-                        
+
                     // });
                     // return newlist
 
-                 //注意: forEach some filter findIndex  这些都属于数组的新方法,
-                 // 都会对数组中的每一项,进行遍历,执行相关的操作
-                 return this.list.filter(item=>{
+                    //注意: forEach some filter findIndex  这些都属于数组的新方法,
+                    // 都会对数组中的每一项,进行遍历,执行相关的操作
+                    return this.list.filter(item => {
 
-                     //注意: es6中,为字符串提供了一个新方法,叫做 String.prototype.includes('要包含的字符串')
-                     //如果包含,则返回true, 否则返回false
-                     if (item.name.includes(keywords)) {
-                         return item
-                     }
-                 })   
+                        //注意: es6中,为字符串提供了一个新方法,叫做 String.prototype.includes('要包含的字符串')
+                        //如果包含,则返回true, 否则返回false
+                        if (item.name.includes(keywords)) {
+                            return item
+                        }
+                    })
                 }
                 ,
                 del(id) {
                     //some()方法
-                    this.list.some((item,index)=>{
-                        if (item.id==id) {
-                            this.list.splice(index,1)
+                    this.list.some((item, index) => {
+                        if (item.id == id) {
+                            this.list.splice(index, 1)
                             return true
                         }
                     })
@@ -147,11 +157,78 @@
                     //         this.list.splice(index,1)
                     //         break
                     //     }
-                        
+
                     // }
                 }
             },
+            directives: {
+                color : function(el,binding) {
+                    el.style.color=binding.value
+                }
+
+                
+            }
+
+            
         })
+
+        var vm2 = new Vue({
+            el: '#app2',
+            data: {
+                dateStr: new Date()
+            },
+            methods: {},
+            filters: {
+                dateNow(dateStr, pattern = 'YYYY年MM月DD日 hh:mm:ss') {
+                    return moment(dateStr).format(pattern)
+                    // moment().format('MMMM Do YYYY, h:mm:ss a')
+                }
+            },
+            directives: {
+                color: {//私有自定义方法指令的名字
+                    //指令的定义
+                    inserted: function (el) {
+                        el.style.color = 'pink'
+                    }
+
+                },
+                fontweight: {//设置字体粗细
+                    bind: function (el, binding) {
+                        el.style.fontWeight = binding.value
+                    }
+
+                },
+                fontsize: function (el, binding) {//注意这个function 等同于 把代码写到了bind 和update 中去
+                    el.style.fontSize = parseInt(binding.value) + 'px'
+
+                }
+                
+            }
+        })
+        //自定义全局按键修饰符
+        Vue.config.keyCodes.f2 = 113
+
+        //使用Vue.directive()定义全局的指令,v-focus
+        //其中:参数1 :指令的名称,定义的时候不需要加v-前缀
+        //但是: 在调用的时候,必须在指令名称前 加上 v-前缀 来进行调用
+        Vue.directive('focus', {
+            bind: function (el) {//每当指令绑定元素上的时候,会立即执行这个bind函数,只执行一次
+                //注意:在每个函数中,第一个参数,永远是el,表示被绑定的指令的哪个元素,这个el参数,是一个原生的js对象
+                //在元素 刚绑定了指令的时候,还没有 插入到DOM中区,这个时候,调用focus方法没用作用
+                //因为,一个元素,只有插入DOM只有,才能获得焦点
+                //el.focus()
+
+            },
+            inserted: function (el) {//inserted表示元素 插入到DOM中的时候,会执行inserted函数,触发一次
+                el.focus()
+
+            },
+            updated(el) {
+                //当VNode更新的时候,会执行updated,可能会触发多次
+            },
+        })
+
+
     </script>
 </body>
 
