@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="./lib/vue.min.js"></script>
+        <style>
+            li:hover{
+                background-color: deeppink;
+            }
+            li{
+                list-style: none;
+                border: 1px solid yellowgreen;
+                width: 100%;
+
+            }
+            
+            .my-enter,.my-leave-to{
+                opacity: 0;
+                transform: translate(0px,100px);
+                
+            }
+           
+            .my-enter-active,.my-leave-active,.my-move{
+                transition: all .8s
+            }
+            .my-leave-active{
+                position: absolute;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+                ID:
+                    <input type="text" v-model="id">
+                NAME:
+                    <input type="text" v-model="name">
+                <input type="button" value="添加" @click="add">
+                <transition-group tag='ul' name="my" appear>
+                    <li v-for="(item,i) of list" :key="item.id" @click="del(item.id)">
+                        <p>{{item.id}}------------------{{item.name}}</p>
+                    </li>
+                </transition-group>
+
+        </div>
+        <script>
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    id:'',
+                    name:'',
+                    list:[
+                        {id:1,name:'赵云'},
+                        {id:2,name:'李白'},
+                        {id:3,name:'安琪拉'},
+                        {id:4,name:'百里守约'}
+
+
+                    ]
+                },
+                methods: {
+                    add(){
+                        let hero = {id:this.id,name:this.name}
+                        this.list.push(hero)
+                        this.id=this.name=""
+                    
+                    },
+                    del(id){
+                        // console.log(id);
+                        this.list.some((item,i)=>{
+  
+                            if (item.id==id) {
+                                this.list.splice(i,1)
+                                return true
+                            }
+                            
+                        })
+                    }
+
+                },
+            })
+        </script>
+    </body>
+</html>

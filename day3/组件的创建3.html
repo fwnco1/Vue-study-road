@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="./lib/vue.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <com3></com3>
+        <com4></com4>com4是app2的私有组件
+    </div>
+
+    <div id="app2">
+            <com3></com3>
+            <com4></com4>
+        </div>
+
+    <!--在被控制的#app外面,使用template 元素,定义组件的html模板结构-->
+    <template id='tp'>
+        <div>
+            <h1>这是通过template元素,在外部定义的组件结构,这个方法</h1>
+            <p>不错,好用</p>
+        </div>
+    </template>
+
+    <template id="tp2">
+        <div>
+            <h1>这是一个私有组件</h1>
+        </div>
+    </template>
+
+
+    <script>
+
+        Vue.component('com3', {
+            template: '#tp'
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {
+
+            }
+        })
+        var vm2 = new Vue({
+            el:'#app2',
+            data:{},
+            components:{
+                'com4':{
+                    template:'#tp2'
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="./lib/vue.min.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <mycom2></mycom2>
+        </div>
+        <script>
+            Vue.component('mycom2',{
+                template:'<div>这是直接使用Vue.component创建出来的组件</div>'
+            })
+            var vm = new Vue({
+                el: '#app',
+                data: {
+
+                }
+            })
+        </script>
+    </body>
+</html>

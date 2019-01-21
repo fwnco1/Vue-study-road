@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="./lib/vue.min.js"></script>
+    <link rel="stylesheet" href="./lib/animate.css">
+    <style>
+        .my-enter{
+                opacity: 0;
+                transform: translate(0px,100px)
+            }
+            .my-leave-to {
+                opacity: 0;
+                transform: translate(100px,0px)
+            }
+            .my-enter-active,.my-leave-active{
+                transition: all .8s
+            }
+            /* v-leave-active{
+
+            } */
+            .ball{
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background-color: red;
+            }
+        </style>
+</head>
+
+<body>
+    <div id="app">
+        <input type="button" value="动画按钮" @mouseover="flag=!flag" @mouseleave="flag=!flag">
+        <transition name='my'>
+            <!--这里添加name属性是可以改变类名中的v-前缀,方便以后不同动画的使用不同名字-->
+            <h3 v-if='flag'>这是一个H3标题</h3>
+        </transition>
+
+
+    </div>
+    <div id="app2">
+        <input type="button" value="第三方类" @mouseover="flag=!flag" @mouseleave="flag=!flag">
+        <transition>
+            <!--使用第三方类动画库时候,在要变化的元素中加上库的类名-->
+            <h3 v-if='flag' class="animated hinge">这是一个H3标题</h3>
+        </transition>
+
+
+    </div>
+    <div id="app3">
+        <input type="button" value="购物车小球" @click="flag=!flag">
+        <transition @before-enter="beforeEnter" @enter="enter" @after-enter="afterEnter">
+            <!--使用第三方类动画库时候,在要变化的元素中加上库的类名-->
+            <div v-if='flag' class="ball"></div>
+        </transition>
+
+
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                flag: false
+            },
+        })
+        var vm = new Vue({
+            el: '#app2',
+            data: {
+                flag: false
+            },
+        })
+        var vm = new Vue({
+            el: '#app3',
+            data: {
+                flag: false
+            },
+            methods: {
+                beforeEnter: function (el) {
+                    // ...
+                    el.style.transform="translate(0,0)"
+                    el.style.opacity=0.5
+                },
+                // 当与 CSS 结合使用时
+                // 回调函数 done 是可选的
+                enter: function (el, done) {
+
+                    // ...
+                    el.offsetWidth
+                    el.style.transform="translate(200px,500px)"
+                    el.style.opacity=1
+                    el.style.transition="all 1s ease"
+                    done()
+                },
+                afterEnter: function (el) {
+                    // ...
+                    this.flag=!this.flag
+                },
+            },
+        })
+    </script>
+</body>
+
+</html>
