@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="./vue-2.4.0.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!--父组件向子组件传递方法,使用的是时间绑定机制; v-on,当我们定义了一个时间属性之后,那么,子组件就能通过某些方式,来调用 传递进来的这个方法-->
+        <com2 @func="show"></com2>
+    </div>
+
+    <template id="tmpl">
+        <div>
+            <h1>这是子组件</h1>
+            <input type="button" value="子组件按钮,点击它,触发父组件func方法" @click="myclick">
+        </div>
+    </template>
+
+    <script>
+        //定义了一个字面量类型的组件模板对象
+        var com2 = {
+            template: '#tmpl',//制定一个id 表示要去加载这个template元素中的内容,当做html结构
+            data() {
+                return {
+                    sonmsg: { name: '下头儿子', age: 6 }
+                }
+            },
+            methods: {
+                myclick() {
+                    //点击子组件的按钮的时候,如何拿到父组件传递过来的func方法
+                    //$emit()第一个参数是父元素传递过来的方法名,后面的参数为传递的参数
+                    //this.$emit('func',123,456) 
+                    this.$emit('func', this.sonmsg)
+                }
+            }
+        }
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                dataFromSon: null
+            },
+            methods: {
+                show(data) {
+                    console.log(123);
+                    
+                    this.dataFromSon = data
+                }
+            },
+            components: {
+                com2
+            }
+        })
+    </script>
+</body>
+
+</html>
