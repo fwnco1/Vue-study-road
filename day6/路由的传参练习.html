@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="./vue-2.4.0.js"></script>
+    <script src="./vue-router-3.0.1.js"></script>
+    <style>
+        .v-enter,
+        .v-leave-to {
+            opacity: 0;
+            transform: translateX(250px)
+        }
+
+        .v-enter-active,
+        .v-leave-active {
+            transition: all .5s ease
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <router-link to="/newsList">新闻列表</router-link>
+        <router-link to="/newsInfo">新闻详情</router-link>
+
+        <transition mode="out-in">
+            <router-view></router-view>
+        </transition>
+
+    </div>
+    <template id="newsList">
+        <div>
+            <router-link :to="`/newsInfo?id=${item.id}`" v-for="item in list" :key="item.id" tag="li">
+                <h1>{{item.title}}</h1>
+                <p>{{item.content}}</p>
+
+            </router-link>
+        </div>
+    </template>
+
+    <template id="newsInfo">
+        <div>
+            <h1>新闻详情页------{{$route.query.id}}</h1>
+        </div>
+    </template>
+
+    <script>
+        //创建组件对象
+        let newsList = {
+            template: '#newsList',
+            data() {
+                return {
+                    list: [
+                        { id: 1, title: '大新闻', content: '小跟班被车撞飞了' },
+                        { id: 2, title: '中新闻', content: '小跟班昨天被车撞飞了' },
+                        { id: 3, title: '小新闻', content: '小跟班前天被车撞飞了' },
+                    ]
+                }
+            },
+        }
+        let newsInfo = {
+            template: '#newsInfo'
+        }
+
+        const router = new VueRouter({
+            routes: [
+                { path: '/newsList', component: newsList },
+                { path: '/newsInfo', component: newsInfo }
+            ]
+        })
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+
+            },
+            router
+        })
+    </script>
+</body>
+
+</html>
