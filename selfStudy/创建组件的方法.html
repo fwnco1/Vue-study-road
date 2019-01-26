@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>创建组件的方法</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="./vue-2.4.0.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <com3></com3>
+            <com4></com4>
+        </div>
+
+        <div id="app2">
+                <com3></com3>
+                <com4></com4>
+        </div>
+
+        <template id="tp">
+            <div>
+                    <h1>这是公共组件</h1>
+            </div>
+        </template>
+        <template id="tp1">
+                <div>
+                        <h1>这是私有组件</h1>
+                </div>
+            </template>
+        <script>
+            Vue.component('com3',{
+                template:"#tp"
+            })
+
+            var vm = new Vue({
+                el: '#app',
+                data: {
+
+                }
+            })
+            // var vm2 = new Vue({
+            //     el:'#app2',
+            //     data:{},
+            //     commonpents:{
+            //         'com4':{
+            //             template:'#tp1'
+            //         }
+            //     }
+            // })
+            var vm2 = new Vue({
+            el:'#app2',
+            data:{},
+            components:{
+                'com4':{
+                    template:'#tp1'
+                }
+            }
+        })
+        </script>
+    </body>
+</html>

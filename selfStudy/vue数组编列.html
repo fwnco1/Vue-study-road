@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>数组编列</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="./vue-2.4.0.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <ul>
+                <li v-for="(item,index) of list" :key="item.user">
+                    {{index}}------{{item.user}}-----{{item.msg}}
+                </li>
+            </ul>
+        </div>
+        <script>
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    list:[
+                        {user:'赵云',msg:'赵子龙参见'},
+                        {user:'守约',msg:'做饭做饭'}
+                    ]
+                }
+            })
+        </script>
+    </body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>组件切换</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="./vue-2.4.0.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <a href="" @click.prevent="name='login'">登录组件</a>
+            <a href="" @click.prevent="name='register'">注册组件</a>
+            <a href="" @click.prevent="name='index'">首页</a>
+
+
+            <component :is="name"></component>
+
+            
+        </div>
+        <script>
+            Vue.component('login',{
+                template:"<h1>这是登录组件</h1>"
+            })
+            Vue.component('register',{
+                template:"<h1>这是注册组件</h1>"
+            })
+            Vue.component('index',{
+                template:"<h1>这是首页</h1>"
+            })
+
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    name:"login"
+                }
+            })
+        </script>
+    </body>
+</html>

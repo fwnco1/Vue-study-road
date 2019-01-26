@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="./vue-2.4.0.js"></script>
+        <style> 
+            h1{
+                background-color: red;
+            }
+            .red{
+                background-color: red;
+            }
+            .blue{
+                color: blue
+            }
+            .fontsize{
+                font-size: 60px
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+
+            <h2 :title="aaa">自定义属性</h2>
+            <h1 @click="bbb">添加事件</h1>
+            <h3 :class="['red','blue',flag?'fontsize':'']">添加类名</h3>
+            <p @click="flag=!flag">控制类名</p>
+
+
+        </div>
+        <script>
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    aaa:'这是一个自定义属性',
+                    flag:false
+                },
+                methods: {
+                    bbb(){
+                        alert('这是一个自定义事件')
+                    }
+                },
+            })
+        </script>
+    </body>
+</html>

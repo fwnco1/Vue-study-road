@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>双向数据绑定</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="./vue-2.4.0.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        ID: <input type="text" v-model="id">
+        USER: <input type="text" v-model="user">
+        SKILL: <input type="text" v-model="skill">
+        <input type="button" value="添加用户" @click="add">
+        <ul>
+            USERS: <li v-for="item of list" :key="item.id">
+                ID:{{item.id}}-----USER:{{item.user}}-----SKILL:{{item.skill}}
+            </li>
+        </ul>
+
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                user: '',
+                skill: '',
+                id: '',
+                list: [
+
+                ]
+            },
+            methods: {
+                add() {
+                    var hero = {
+                        id:this.id,
+                        user:this.user,
+                        skill:this.skill
+                    }
+
+                    this.list.push(hero)
+                    this.id = this.user = this.skill = ""
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>vue过滤器</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="./vue-2.4.0.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <!--msgformat(a,b)参数a,b是下面过滤器方法中的实参-->
+            <p>{{msg | msgformat('疯狂','小跟班') | test}}</p>
+        </div>
+        <script>
+            //定义一个Vue全局过滤器,名字叫msgformat,function中参数1是过滤的字符串,参数2,参数3形参改变原字符串
+
+            Vue.filter('msgformat',(msg,arg,arg2)=>{
+                //字符串的 replace 方法,第一个参数除了可以写字符串还可以是正则
+                return msg.replace(/单纯/g,arg+arg2)
+            })
+            Vue.filter('test',(msg)=>{
+                return msg+"=====小跟班被车子撞飞了"
+            })
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    msg:'曾经，我也是一个单纯的少年，单纯的我，傻傻的问，谁是世界上最单纯的男人'
+                }
+            })
+        </script>
+    </body>
+</html>

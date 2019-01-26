@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>私有自定义属性和时间插件</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="./vue-2.4.0.js"></script>
+        <script src="./lib/moment.js"></script>
+    </head>
+    <body>
+        <div id="app" v-color v-fontweight="900" v-fontsize="50">
+            {{dateStr | dateNow}}
+        </div>
+        <script>
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    dateSTr:new Date()
+                },
+                filters:{
+                    dateNow(dateStr,pattern='YYYY年MM月DD日 hh:mm:ss'){
+                        return moment(dateStr).format(pattern)
+                        //moment().format('MMMM Do YYYY, h:mm:ss a'si)
+                    }
+                },
+                directives:{
+                    color:{//私有自定义方法指令的名字
+                        //指令的定义:
+                        inserted:function(el){
+                            el.style.color="pink"
+                        }
+
+                    },
+                    fontweight:{//设置字体粗细
+                        bind:function(el,binding) {
+                            el.style.fontWeight=binding.value
+                        }
+
+                    },
+                    fontsize:function(el,binding) {//注意这个function等同于,把代码写到bind和update中去
+                        el.style.fontSize=parseInt(binding.value)+'px'
+                    }
+                }
+            })
+            //自定义全局按键修饰符
+            Vue.config.keyCodes.f2=113
+
+            //使用Vue.directive()定义全局的指令,v-focus
+            //其中:参数1:指令的名称,定义的时候不需要加v-前缀
+            //但是:在调用的时候,必须在指令名称前,加上v-前缀 来进行调用
+            Vue.directive('focus',{
+                bind:function(el){//每当指令绑定元素上的时候,会立即执行这个bind函数,只执行一次
+                    //注意:在每个函数中,第一个参数,永远是el,表示被绑定的原生JS对象
+                    //因为,一个元素,只有插入DOM,才能获得焦点
+                    //el.focus
+
+                },
+                inserted:function(el){
+                    //inserted表示元素 插入到DOM中的时候.会执行,触发一次
+                    el.focus()
+                },
+                updated(el) {
+                    //当VNode更新的时候,会执行updated,可能触发多次
+                },
+            })
+        </script>
+    </body>
+</html>
